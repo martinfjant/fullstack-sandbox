@@ -9,21 +9,6 @@ import ReceiptIcon from '@material-ui/icons/Receipt';
 import Typography from '@material-ui/core/Typography';
 import { ToDoListForm } from './ToDoListForm';
 
-const sendTodoList = (data) => {
-  fetch('http://localhost:3001/todos', {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    body: JSON.stringify(data),
-  }).then((res) => res.json());
-};
-
 const getPersonalTodos = () => {
   return fetch('http://localhost:3001/todos').then((res) => res.json());
 };
@@ -31,6 +16,21 @@ const getPersonalTodos = () => {
 export const ToDoLists = ({ style }) => {
   const [toDoLists, setToDoLists] = useState({});
   const [activeList, setActiveList] = useState();
+
+  const sendTodoList = (data) => {
+    fetch('http://localhost:3001/todos', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+  };
 
   useEffect(() => {
     getPersonalTodos().then(setToDoLists);
@@ -60,10 +60,12 @@ export const ToDoLists = ({ style }) => {
           toDoList={toDoLists[activeList]}
           saveToDoList={(id, { todos }) => {
             const listToUpdate = toDoLists[id];
-            sendTodoList({
+            const data = {
               ...toDoLists,
               [id]: { ...listToUpdate, todos },
-            });
+            };
+            sendTodoList(data);
+            setToDoLists(data);
           }}
         />
       )}
