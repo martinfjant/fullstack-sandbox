@@ -49,6 +49,9 @@ export const ToDoLists = ({ style }) => {
                   <ReceiptIcon />
                 </ListItemIcon>
                 <ListItemText primary={toDoLists[key].title} />
+                {toDoLists[key].todos
+                  .map((todo) => todo.done)
+                  .reduce((a, b) => a && b) && 'All done!'}
               </ListItem>
             ))}
           </List>

@@ -6,12 +6,16 @@ let todos = {
   '0000000001': {
     id: '0000000001',
     title: 'First List',
-    todos: [{ text: 'First todo of first list!', date: '2020-05-07' }],
+    todos: [
+      { text: 'First todo of first list!', date: '2020-05-07', done: true },
+    ],
   },
   '0000000002': {
     id: '0000000002',
     title: 'Second List',
-    todos: [{ text: 'First todo of second list!', date: '2020-05-07' }],
+    todos: [
+      { text: 'First todo of second list!', date: '2020-05-07', done: false },
+    ],
   },
 };
 

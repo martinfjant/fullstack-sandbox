@@ -8,6 +8,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { TextField } from '../../shared/FormFields';
+import { Checkbox } from '@material-ui/core';
 
 const useStyles = makeStyles({
   card: {
@@ -56,6 +57,24 @@ export const ToDoListForm = ({ toDoList, saveToDoList }) => {
       ...todos.slice(index + 1),
     ]);
   };
+
+  const handleCheckbox = (event, index) => {
+    setTodos([
+      // immutable update
+      ...todos.slice(0, index),
+      Object.assign({}, todos[index], { done: event.target.checked }),
+      ...todos.slice(index + 1),
+    ]);
+  };
+
+  const daysDue = (date) => {
+    const today = Date.now();
+    const due = new Date(date);
+    console.log(due.toDateString());
+    const daysInMS = due - today;
+    const days = Math.floor(daysInMS / (24 * 60 * 60 * 1000));
+    return `${days}`; // Typecast as string
+  };
   return (
     <Card className={classes.card}>
       <CardContent>
@@ -63,6 +82,10 @@ export const ToDoListForm = ({ toDoList, saveToDoList }) => {
         <form onSubmit={handleSubmit} className={classes.form}>
           {todos.map((todo, index) => (
             <div key={index} className={classes.todoLine}>
+              <Checkbox
+                checked={todo.done}
+                onClick={(event) => handleCheckbox(event, index)}
+              />
               <Typography className={classes.standardSpace} variant="h6">
                 {index + 1}
               </Typography>
@@ -92,6 +115,9 @@ export const ToDoListForm = ({ toDoList, saveToDoList }) => {
               >
                 <DeleteIcon />
               </Button>
+              <Typography className={classes.standardSpace} variant="h6">
+                {daysDue(todo.date)} days left!
+              </Typography>
             </div>
           ))}
           <CardActions>
