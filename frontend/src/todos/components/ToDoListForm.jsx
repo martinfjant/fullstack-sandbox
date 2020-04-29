@@ -70,7 +70,6 @@ export const ToDoListForm = ({ toDoList, saveToDoList }) => {
   const daysDue = (date) => {
     const today = Date.now();
     const due = new Date(date);
-    console.log(due.toDateString());
     const daysInMS = due - today;
     const days = Math.floor(daysInMS / (24 * 60 * 60 * 1000));
     return `${days}`; // Typecast as string
@@ -85,6 +84,7 @@ export const ToDoListForm = ({ toDoList, saveToDoList }) => {
               <Checkbox
                 checked={todo.done}
                 onClick={(event) => handleCheckbox(event, index)}
+                value={todo.done}
               />
               <Typography className={classes.standardSpace} variant="h6">
                 {index + 1}
@@ -125,7 +125,7 @@ export const ToDoListForm = ({ toDoList, saveToDoList }) => {
               type="button"
               color="primary"
               onClick={() => {
-                setTodos([...todos, '']);
+                setTodos([...todos, { text: '', date: '', done: false }]);
               }}
             >
               Add Todo <AddIcon />

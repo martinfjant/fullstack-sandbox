@@ -26,15 +26,11 @@ const PORT = 3001;
 
 app.get('/', (req, res) => res.send('Hello World!'));
 app.get('/todos', (req, res) => {
-  console.log('GET');
   res.send(todos);
 });
 app.post('/todos', (req, res) => {
-  console.log('Adding todos');
   console.log(req.body);
   todos = req.body;
-  console.log('Returning added todos');
-  console.log(todos);
   res.send(todos);
 });
 
